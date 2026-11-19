@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Play & Learn | Catatan FerSus</title>
 <style>
+[hidden]{display:none!important}
 .fs-hub{max-width:1080px;margin:0 auto;padding:18px;color:#17212b;font-family:Arial,sans-serif}
 .fs-hub-hero{background:linear-gradient(120deg,#102a43 0%,#173f5f 58%,#245b70 100%);color:#fff;padding:34px;border-radius:18px;margin-bottom:20px;position:relative;overflow:hidden}
 .fs-hub-hero:after{content:"✦";position:absolute;right:42px;top:2px;font-size:118px;line-height:1;color:rgba(255,255,255,.08);transform:rotate(12deg)}
@@ -270,7 +271,7 @@
     // Ambil langganan terbaru. Data relasi paket ditampilkan jika tersedia.
     const { data: subscriptions, error: subError } = await supabaseClient
       .from('subscriptions')
-      .select('id,status,start_date,end_date,created_at,packages(name)')
+      .select('id,status,start_date,end_date,created_at,package_id')
       .eq('user_id', user.id)
       .order('created_at', { ascending: false })
       .limit(1);
@@ -279,12 +280,20 @@
     statusBox.replaceChildren();
 
     if (subError) {
-      statusBox.textContent = 'Profil berhasil dimuat, tetapi status langganan belum dapat dibaca. Periksa kebijakan RLS tabel subscriptions.';
+      statusBox.textContent = `Status langganan gagal dimuat: ${subError.message}`;
       statusBox.className = 'fs-member-empty';
       console.warn('Gagal memuat subscription:', subError.message);
     } else if (subscriptions && subscriptions.length) {
       const sub = subscriptions[0];
-      const packageName = sub.packages?.name || 'Paket keluarga';
+      let packageName = 'Paket keluarga';
+      if (sub.package_id) {
+        const { data: linkedPackage, error: linkedPackageError } = await supabaseClient
+          .from('packages')
+          .select('name')
+          .eq('id', sub.package_id)
+          .maybeSingle();
+        if (!linkedPackageError && linkedPackage?.name) packageName = linkedPackage.name;
+      }
       const endDate = sub.end_date ? new Date(sub.end_date).toLocaleDateString('id-ID') : 'Belum ditentukan';
       const status = String(sub.status || 'pending').toLowerCase();
       const title = document.createElement('strong');
@@ -308,7 +317,7 @@
     packageArea.replaceChildren();
 
     if (packageError) {
-      packageArea.textContent = 'Paket belum dapat dimuat. Periksa kebijakan SELECT pada tabel packages.';
+      packageArea.textContent = `Paket gagal dimuat: ${packageError.message}`;
       console.warn('Gagal memuat packages:', packageError.message);
       return;
     }
