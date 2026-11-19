@@ -20,8 +20,13 @@ Halaman ini adalah katalog/link. Setiap game dibuka langsung dari GitHub Pages.
 .fs-hub-card:focus-visible{outline:3px solid #e7bd65;outline-offset:3px}
 .fs-hub-icon{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.72);font-size:27px;box-shadow:0 2px 8px rgba(16,42,67,.06)}
 .fs-hub-status{display:block;margin-top:12px;color:#176b5a;font-size:10px;font-weight:bold;letter-spacing:1.15px;text-transform:uppercase}
-.fs-hub-card b{display:block;color:#102a43;font:bold 23px Georgia,serif;margin:7px 0}
-.fs-hub-card p{font-size:14px;line-height:1.6;color:#425466;margin:0 0 14px;max-width:92%}
+  .fs-hub-card b {
+  display: block;
+  color: #102a43;
+  font: bold 26px Georgia, serif;
+  margin: 8px 0;
+}
+.fs-hub-card p{font-size:15px;line-height:1.6;color:#425466;margin:0 0 15px;max-width:92%}
 .fs-hub-open{display:inline-block;font-size:11px;font-weight:bold;letter-spacing:.35px;color:#105b50;padding-bottom:3px;border-bottom:1px solid rgba(16,91,80,.35)}
 .fs-hub-card.english{background:linear-gradient(125deg,#eaf4ff 0%,#d7eaff 100%)}
 .fs-hub-card.flag{background:linear-gradient(125deg,#e4fbf7 0%,#c9f0e9 100%)}
@@ -35,25 +40,12 @@ Halaman ini adalah katalog/link. Setiap game dibuka langsung dari GitHub Pages.
 .fs-hub-note{margin-top:24px;padding:16px;background:#f5f5f0;border-left:4px solid #c99a2e;border-radius:8px;font-size:13px;line-height:1.7;color:#596674}
 .fs-hub-footer{text-align:center;color:#7b8792;font-size:12px;margin-top:28px}
   
-@media(max-width:760px){
-  .fs-hub{
-    padding:14px;
-    max-width:100%;
-  }
-
-  .fs-hub-hero{
-    padding:24px 20px;
-    margin-bottom:22px;
-  }
-
-  .fs-hub-hero h2{
-    font-size:29px;
-    line-height:1.2;
-  }
-
-  .fs-hub-hero p{
-    font-size:14px;
-  }
+  @media(max-width:760px){
+  .fs-hub{padding:14px;max-width:100%}
+  .fs-hub-hero{padding:24px 20px;margin-bottom:22px}
+  .fs-hub-hero h2{font-size:29px;line-height:1.2}
+  .fs-hub-hero p{font-size:14px}
+  .fs-hub-hero:after{right:12px;font-size:88px}
 
   .fs-hub-grid{
     grid-template-columns:minmax(0,1fr);
@@ -62,27 +54,26 @@ Halaman ini adalah katalog/link. Setiap game dibuka langsung dari GitHub Pages.
 
   .fs-hub-card{
     min-width:0;
-    min-height:150px;
+    min-height:170px;
     padding:20px;
   }
 
   .fs-hub-card b{
-    font-size:22px;
+    font-size:27px;
+    margin:9px 0;
   }
 
   .fs-hub-card p{
-    font-size:14px;
+    font-size:15px;
+    line-height:1.65;
     max-width:95%;
   }
 
-  .fs-hub-card:before{
-    font-size:105px;
-    right:12px;
-  }
+  .fs-hub-status{font-size:11px}
+  .fs-hub-open{font-size:13px}
+  .fs-hub-card:before{font-size:108px;right:12px}
+  .fs-hub-note{font-size:13px}
 
-  .fs-hub-note{
-    font-size:13px;
-  }
 }
 
 @media(prefers-reduced-motion:reduce){
