@@ -50,6 +50,18 @@
 .fs-account{display:none;margin-top:12px;padding:14px;background:white;border:1px solid #dbe5ec;border-radius:10px}
 .fs-account.show{display:block}
 .fs-account p{margin:6px 0;color:#475569;font-size:14px}
+
+.fs-member-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.fs-member-card{background:#fff;border:1px solid #dce5eb;border-radius:12px;padding:15px}
+.fs-member-card h3{margin:0 0 8px;color:#102a43;font: bold 18px Georgia,serif}
+.fs-member-price{font:bold 24px Georgia,serif;color:#145b50;margin:8px 0}
+.fs-member-card p{font-size:13px;line-height:1.5;color:#526170;margin:5px 0}
+.fs-member-section{margin-top:18px}
+.fs-member-section h3{font:bold 19px Georgia,serif;color:#102a43;margin:0 0 8px}
+.fs-member-pill{display:inline-block;padding:5px 9px;border-radius:99px;background:#fff4d6;color:#805b13;font-size:11px;font-weight:bold}
+.fs-member-empty{padding:13px;background:#fff;border:1px dashed #cbd5e1;border-radius:10px;color:#526170;font-size:13px;line-height:1.6}
+.fs-member-note{font-size:12px;color:#64748b;line-height:1.5;margin-top:12px}
+
 @media(max-width:760px){
  .fs-hub{padding:14px;max-width:100%}
  .fs-hub-hero{padding:24px 20px;margin-bottom:18px}
@@ -64,6 +76,7 @@
  .fs-hub-card:before{font-size:108px;right:12px}
  .fs-hub-note{font-size:13px}
  .fs-form{grid-template-columns:1fr}
+ .fs-member-grid{grid-template-columns:1fr}
  .fs-field.full{grid-column:auto}
  .fs-authbar{justify-content:flex-start}
 }
@@ -108,7 +121,17 @@
     <div class="fs-account" id="accountBox">
       <strong id="accountName">Anggota</strong>
       <p id="accountEmail"></p>
-      <p id="accountPlan">Memuat informasi keanggotaan...</p>
+      <div class="fs-member-section">
+        <h3>Status Keanggotaan</h3>
+        <div id="membershipStatus" class="fs-member-empty">Memuat status keanggotaan...</div>
+      </div>
+      <div class="fs-member-section">
+        <h3>Paket Keluarga</h3>
+        <div id="familyPackages" class="fs-member-grid">
+          <div class="fs-member-empty">Memuat pilihan paket...</div>
+        </div>
+        <p class="fs-member-note">Paket berlaku 30 hari. Pemilihan paket dan pembayaran akan diaktifkan setelah alur checkout Lynk.id siap.</p>
+      </div>
     </div>
   </section>
 
@@ -227,27 +250,107 @@
     $('logoutBtn').hidden = false;
     $('authForm').hidden = true;
     $('accountBox').classList.add('show');
-    $('accountName').textContent = user.user_metadata?.full_name || 'Anggota Play & Learn';
-    $('accountEmail').textContent = user.email || '';
-    $('accountPlan').textContent = 'Status keanggotaan: belum ada paket aktif yang ditampilkan.';
     $('panelTitle').textContent = 'Dashboard Anggota';
 
-    const { data: subscriptions, error } = await supabaseClient
+    // Ambil profil anggota dari tabel member_profiles.
+    const { data: profile, error: profileError } = await supabaseClient
+      .from('member_profiles')
+      .select('full_name, role')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    const displayName = profile?.full_name || user.user_metadata?.full_name || 'Anggota Play & Learn';
+    $('accountName').textContent = `Selamat datang, ${displayName}!`;
+    $('accountEmail').textContent = user.email || '';
+
+    if (profileError) {
+      console.warn('Gagal memuat profil:', profileError.message);
+    }
+
+    // Ambil langganan terbaru. Data relasi paket ditampilkan jika tersedia.
+    const { data: subscriptions, error: subError } = await supabaseClient
       .from('subscriptions')
       .select('id,status,start_date,end_date,created_at,packages(name)')
       .eq('user_id', user.id)
       .order('created_at', { ascending: false })
       .limit(1);
 
-    if (!error && subscriptions && subscriptions.length) {
+    const statusBox = $('membershipStatus');
+    statusBox.replaceChildren();
+
+    if (subError) {
+      statusBox.textContent = 'Profil berhasil dimuat, tetapi status langganan belum dapat dibaca. Periksa kebijakan RLS tabel subscriptions.';
+      statusBox.className = 'fs-member-empty';
+      console.warn('Gagal memuat subscription:', subError.message);
+    } else if (subscriptions && subscriptions.length) {
       const sub = subscriptions[0];
-      const packageName = sub.packages?.name || 'Paket anggota';
-      const endDate = sub.end_date ? new Date(sub.end_date).toLocaleDateString('id-ID') : '-';
-      $('accountPlan').textContent = `Paket: ${packageName} · Status: ${sub.status} · Berlaku sampai: ${endDate}`;
-    } else if (error) {
-      $('accountPlan').textContent = 'Akun aktif. Informasi paket belum dapat dimuat.';
-      console.warn('Gagal memuat subscription:', error.message);
+      const packageName = sub.packages?.name || 'Paket keluarga';
+      const endDate = sub.end_date ? new Date(sub.end_date).toLocaleDateString('id-ID') : 'Belum ditentukan';
+      const status = String(sub.status || 'pending').toLowerCase();
+      const title = document.createElement('strong');
+      title.textContent = status === 'active' ? 'Keanggotaan Aktif' : 'Menunggu Aktivasi / Pembayaran';
+      const detail = document.createElement('p');
+      detail.textContent = `Paket: ${packageName} · Status: ${sub.status || 'pending'} · Berlaku sampai: ${endDate}`;
+      statusBox.append(title, detail);
+      statusBox.className = 'fs-member-empty';
+    } else {
+      statusBox.textContent = 'Belum berlangganan. Pilih salah satu paket keluarga di bawah untuk memulai.';
+      statusBox.className = 'fs-member-empty';
     }
+
+    // Ambil paket dari database; hanya tampilkan dua paket B2C.
+    const { data: packages, error: packageError } = await supabaseClient
+      .from('packages')
+      .select('*')
+      .order('price', { ascending: true });
+
+    const packageArea = $('familyPackages');
+    packageArea.replaceChildren();
+
+    if (packageError) {
+      packageArea.textContent = 'Paket belum dapat dimuat. Periksa kebijakan SELECT pada tabel packages.';
+      console.warn('Gagal memuat packages:', packageError.message);
+      return;
+    }
+
+    const familyPackages = (packages || []).filter(pkg =>
+      ['Family Monthly', 'Family Plus'].includes(pkg.name) && pkg.is_active !== false
+    );
+
+    if (!familyPackages.length) {
+      packageArea.textContent = 'Paket keluarga belum tersedia. Silakan hubungi admin.';
+      return;
+    }
+
+    familyPackages.forEach(pkg => {
+      const card = document.createElement('article');
+      card.className = 'fs-member-card';
+
+      const heading = document.createElement('h3');
+      heading.textContent = pkg.name;
+
+      const price = document.createElement('div');
+      price.className = 'fs-member-price';
+      price.textContent = new Intl.NumberFormat('id-ID', {
+        style: 'currency', currency: 'IDR', maximumFractionDigits: 0
+      }).format(Number(pkg.price || 0));
+
+      const description = document.createElement('p');
+      description.textContent = pkg.description || 'Paket belajar keluarga Play & Learn.';
+
+      const duration = document.createElement('p');
+      duration.textContent = `Masa aktif: ${pkg.duration_days || pkg.duration || 30} hari`;
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'fs-btn fs-btn-outline';
+      button.textContent = 'Segera tersedia';
+      button.disabled = true;
+      button.title = 'Checkout akan diaktifkan setelah integrasi pembayaran Lynk.id selesai.';
+
+      card.append(heading, price, description, duration, button);
+      packageArea.appendChild(card);
+    });
   }
 
   $('logoutBtn').addEventListener('click', async () => {
