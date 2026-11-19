@@ -1,18 +1,17 @@
-
-<!-- GAMES EDUKASI - KATALOG CATATAN FERSUS
-Versi update: 6 games aktif
-Tempel seluruh isi file ini ke Blogger Pages > Games dan Edukasi > HTML view.
-Halaman ini adalah katalog/link. Setiap game dibuka langsung dari GitHub Pages.
--->
-
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play & Learn | Catatan FerSus</title>
 <style>
 .fs-hub{max-width:1080px;margin:0 auto;padding:18px;color:#17212b;font-family:Arial,sans-serif}
-.fs-hub-hero{background:linear-gradient(120deg,#102a43 0%,#173f5f 58%,#245b70 100%);color:#fff;padding:34px;border-radius:18px;margin-bottom:26px;position:relative;overflow:hidden}
+.fs-hub-hero{background:linear-gradient(120deg,#102a43 0%,#173f5f 58%,#245b70 100%);color:#fff;padding:34px;border-radius:18px;margin-bottom:20px;position:relative;overflow:hidden}
 .fs-hub-hero:after{content:"✦";position:absolute;right:42px;top:2px;font-size:118px;line-height:1;color:rgba(255,255,255,.08);transform:rotate(12deg)}
 .fs-hub-hero small{color:#e7bd65;font-weight:bold;letter-spacing:2px}
-.fs-hub-hero h2{color:#fff;font:bold 40px/1.15 Georgia,serif;margin:12px 0;position:relative;z-index:1}
+.fs-hub-hero h1{color:#fff;font:bold 40px/1.15 Georgia,serif;margin:12px 0;position:relative;z-index:1}
 .fs-hub-hero p{color:#e6edf3;line-height:1.7;margin:0;max-width:760px;position:relative;z-index:1}
-.fs-hub h3{font:bold 24px Georgia,serif;color:#102a43;margin:28px 0 16px}
+.fs-hub h2{font:bold 24px Georgia,serif;color:#102a43;margin:28px 0 16px}
 .fs-hub-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .fs-hub-card{display:block;position:relative;isolation:isolate;overflow:hidden;min-height:158px;padding:22px;border:1px solid rgba(16,42,67,.10);border-radius:17px;text-decoration:none!important;color:#17212b!important;box-shadow:0 5px 18px rgba(16,42,67,.07);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
 .fs-hub-card:before{content:attr(data-symbol);position:absolute;z-index:-1;right:18px;bottom:-26px;font-size:126px;line-height:1;opacity:.13;filter:grayscale(.1);transform:rotate(-8deg);pointer-events:none}
@@ -20,12 +19,7 @@ Halaman ini adalah katalog/link. Setiap game dibuka langsung dari GitHub Pages.
 .fs-hub-card:focus-visible{outline:3px solid #e7bd65;outline-offset:3px}
 .fs-hub-icon{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.72);font-size:27px;box-shadow:0 2px 8px rgba(16,42,67,.06)}
 .fs-hub-status{display:block;margin-top:12px;color:#176b5a;font-size:10px;font-weight:bold;letter-spacing:1.15px;text-transform:uppercase}
-  .fs-hub-card b {
-  display: block;
-  color: #102a43;
-  font: bold 26px Georgia, serif;
-  margin: 8px 0;
-}
+.fs-hub-card b{display:block;color:#102a43;font:bold 26px Georgia,serif;margin:8px 0}
 .fs-hub-card p{font-size:15px;line-height:1.6;color:#425466;margin:0 0 15px;max-width:92%}
 .fs-hub-open{display:inline-block;font-size:11px;font-weight:bold;letter-spacing:.35px;color:#105b50;padding-bottom:3px;border-bottom:1px solid rgba(16,91,80,.35)}
 .fs-hub-card.english{background:linear-gradient(125deg,#eaf4ff 0%,#d7eaff 100%)}
@@ -39,133 +33,250 @@ Halaman ini adalah katalog/link. Setiap game dibuka langsung dari GitHub Pages.
 .fs-hub-card.world .fs-hub-status{color:#5550a0}
 .fs-hub-note{margin-top:24px;padding:16px;background:#f5f5f0;border-left:4px solid #c99a2e;border-radius:8px;font-size:13px;line-height:1.7;color:#596674}
 .fs-hub-footer{text-align:center;color:#7b8792;font-size:12px;margin-top:28px}
-  
-  @media(max-width:760px){
-  .fs-hub{padding:14px;max-width:100%}
-  .fs-hub-hero{padding:24px 20px;margin-bottom:22px}
-  .fs-hub-hero h2{font-size:29px;line-height:1.2}
-  .fs-hub-hero p{font-size:14px}
-  .fs-hub-hero:after{right:12px;font-size:88px}
-
-  .fs-hub-grid{
-    grid-template-columns:minmax(0,1fr);
-    gap:14px;
-  }
-
-  .fs-hub-card{
-    min-width:0;
-    min-height:170px;
-    padding:20px;
-  }
-
-  .fs-hub-card b{
-    font-size:27px;
-    margin:9px 0;
-  }
-
-  .fs-hub-card p{
-    font-size:15px;
-    line-height:1.65;
-    max-width:95%;
-  }
-
-  .fs-hub-status{font-size:11px}
-  .fs-hub-open{font-size:13px}
-  .fs-hub-card:before{font-size:108px;right:12px}
-  .fs-hub-note{font-size:13px}
-
-}
-
-@media(prefers-reduced-motion:reduce){
-  .fs-hub-card{transition:none}
-}
-
-
-  .fs-hub{padding:14px}
-  .fs-hub-hero{padding:25px}
-  .fs-hub-hero h2{font-size:32px}
-  .fs-hub-hero:after{right:12px;font-size:88px}
-  .fs-hub-grid{grid-template-columns:1fr;gap:13px}
-  .fs-hub-card{min-height:148px;padding:20px}
-  .fs-hub-card:before{font-size:108px;right:12px}
-  .fs-hub-card p{max-width:95%}
+.fs-authbar{display:flex;justify-content:flex-end;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 18px}
+.fs-btn{border:0;border-radius:10px;padding:11px 17px;font-weight:bold;cursor:pointer;font-size:14px}
+.fs-btn-primary{background:#145b50;color:white}.fs-btn-outline{background:white;color:#145b50;border:1px solid #145b50}
+.fs-auth-status{font-size:13px;color:#526170;margin-right:auto}
+.fs-panel{display:none;margin:0 0 24px;padding:20px;border:1px solid #dce5eb;border-radius:14px;background:#f8fbfd}
+.fs-panel.show{display:block}
+.fs-panel h2{margin:0 0 14px;font-size:22px}
+.fs-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.fs-field{display:flex;flex-direction:column;gap:6px}
+.fs-field.full{grid-column:1/-1}
+.fs-field label{font-size:13px;font-weight:bold;color:#334155}
+.fs-field input{box-sizing:border-box;width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:15px;background:white}
+.fs-message{margin-top:12px;font-size:14px;line-height:1.5}
+.fs-message.error{color:#b42318}.fs-message.success{color:#087443}
+.fs-account{display:none;margin-top:12px;padding:14px;background:white;border:1px solid #dbe5ec;border-radius:10px}
+.fs-account.show{display:block}
+.fs-account p{margin:6px 0;color:#475569;font-size:14px}
+@media(max-width:760px){
+ .fs-hub{padding:14px;max-width:100%}
+ .fs-hub-hero{padding:24px 20px;margin-bottom:18px}
+ .fs-hub-hero h1{font-size:29px;line-height:1.2}
+ .fs-hub-hero p{font-size:14px}
+ .fs-hub-hero:after{right:12px;font-size:88px}
+ .fs-hub-grid{grid-template-columns:minmax(0,1fr);gap:14px}
+ .fs-hub-card{min-width:0;min-height:170px;padding:20px}
+ .fs-hub-card b{font-size:27px;margin:9px 0}
+ .fs-hub-card p{font-size:15px;line-height:1.65;max-width:95%}
+ .fs-hub-status{font-size:11px}.fs-hub-open{font-size:13px}
+ .fs-hub-card:before{font-size:108px;right:12px}
+ .fs-hub-note{font-size:13px}
+ .fs-form{grid-template-columns:1fr}
+ .fs-field.full{grid-column:auto}
+ .fs-authbar{justify-content:flex-start}
 }
 @media(prefers-reduced-motion:reduce){.fs-hub-card{transition:none}}
 </style>
-
+</head>
+<body>
 <div class="fs-hub">
-
   <section class="fs-hub-hero">
     <small>CATATAN FERSUS · LEARNING HUB</small>
-    <h2>Belajar Serius,<br/>Bermain dengan Gembira.</h2>
+    <h1>Belajar Serius,<br> Bermain dengan Gembira.</h1>
     <p>Ruang belajar interaktif untuk menguji pengetahuan, menambah wawasan, dan belajar hal baru. Pilih permainan untuk membuka aplikasi aslinya.</p>
   </section>
 
-  <h3>Games yang Bisa Dimainkan</h3>
-
-  <div class="fs-hub-grid">
-
-    <!-- 1. ENGLISH QUEST -->
-    <a class="fs-hub-card english" data-symbol="🇬🇧" href="https://feribatahan.github.io/English-Quest/" target="_blank" rel="noopener noreferrer">
-      <span class="fs-hub-icon">🇬🇧</span>
-      <span class="fs-hub-status">Aktif · Language</span>
-      <b>English Quest</b>
-      <p>Latihan kosakata dan kemampuan bahasa Inggris melalui kuis interaktif.</p>
-      <span class="fs-hub-open">BUKA ENGLISH QUEST ↗</span>
-    </a>
-
-    <!-- 2. FLAG QUEST -->
-    <a class="fs-hub-card flag" data-symbol="🌍" href="https://feribatahan.github.io/Flag-Quest/" target="_blank" rel="noopener noreferrer">
-      <span class="fs-hub-icon">🌍</span>
-      <span class="fs-hub-status">Aktif · Geography</span>
-      <b>Flag Quest</b>
-      <p>Tebak bendera negara-negara di dunia dan asah ingatan geografimu.</p>
-      <span class="fs-hub-open">BUKA FLAG QUEST ↗</span>
-    </a>
-
-    <!-- 3. QURAN QUEST -->
-    <a class="fs-hub-card quran" data-symbol="📖" href="https://feribatahan.github.io/Qur-an-Quest/" target="_blank" rel="noopener noreferrer">
-      <span class="fs-hub-icon">📖</span>
-      <span class="fs-hub-status">Aktif · Al-Qur'an</span>
-      <b>Qur'an Quest</b>
-      <p>Kuis interaktif Juz 30 untuk mengenal surah, ayat, makna, dan kandungan Al-Qur'an.</p>
-      <span class="fs-hub-open">BUKA QUR'AN QUEST ↗</span>
-    </a>
-
-    <!-- 4. SIROH QUEST -->
-    <a class="fs-hub-card siroh" data-symbol="🕌" href="https://feribatahan.github.io/Siroh-Quest/" target="_blank" rel="noopener noreferrer">
-      <span class="fs-hub-icon">🕌</span>
-      <span class="fs-hub-status">Aktif · Sejarah Islam</span>
-      <b>Siroh Quest</b>
-      <p>Pelajari Sirah Nabawiyah, perjalanan Rasulullah ﷺ, sejarah Islam, dan kisah para sahabat.</p>
-      <span class="fs-hub-open">BUKA SIROH QUEST ↗</span>
-    </a>
-
-    <!-- 5. INDONESIA QUEST -->
-    <a class="fs-hub-card indonesia" data-symbol="🇮🇩" href="https://feribatahan.github.io/Indonesia-Quest/" target="_blank" rel="noopener noreferrer">
-      <span class="fs-hub-icon">🇮🇩</span>
-      <span class="fs-hub-status">Aktif · Indonesia</span>
-      <b>Indonesia Quest</b>
-      <p>Kenali provinsi, ibu kota, pulau, suku, budaya, dan kekayaan Nusantara.</p>
-      <span class="fs-hub-open">BUKA INDONESIA QUEST ↗</span>
-    </a>
-
-    <!-- 6. WORLD CAPITAL QUEST -->
-    <a class="fs-hub-card world" data-symbol="🗺️" href="https://feribatahan.github.io/World-Capital-Quest/" target="_blank" rel="noopener noreferrer">
-      <span class="fs-hub-icon">🗺️</span>
-      <span class="fs-hub-status">Aktif · World Knowledge</span>
-      <b>World Capital Quest</b>
-      <p>Jelajahi ibu kota negara, landmark ikonik, dan pengetahuan menarik dari seluruh dunia.</p>
-      <span class="fs-hub-open">BUKA WORLD CAPITAL QUEST ↗</span>
-    </a>
-
+  <div class="fs-authbar">
+    <span class="fs-auth-status" id="authStatus">Silakan login atau daftar untuk mengelola keanggotaan.</span>
+    <button class="fs-btn fs-btn-outline" id="loginBtn" type="button">Login</button>
+    <button class="fs-btn fs-btn-primary" id="registerBtn" type="button">Daftar</button>
+    <button class="fs-btn fs-btn-outline" id="logoutBtn" type="button" hidden>Logout</button>
   </div>
 
-  <div class="fs-hub-note">
-     <b>Catatan:</b> Play & Learn – Catatan FerSus Learning Hub. Platform belajar interaktif untuk keluarga, anak-anak, dan institusi pendidikan. Belajar sambil bermain, kapan saja dan di mana saja.  </div>
+  <section class="fs-panel" id="authPanel" aria-live="polite">
+    <h2 id="panelTitle">Login Anggota</h2>
+    <form id="authForm" class="fs-form">
+      <div class="fs-field full" id="nameField" hidden>
+        <label for="fullName">Nama lengkap</label>
+        <input id="fullName" type="text" autocomplete="name" maxlength="100" placeholder="Nama lengkap">
+      </div>
+      <div class="fs-field full">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email" required placeholder="nama@email.com">
+      </div>
+      <div class="fs-field full">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Minimal 8 karakter">
+      </div>
+      <div class="fs-field full">
+        <button class="fs-btn fs-btn-primary" id="submitAuth" type="submit">Login</button>
+      </div>
+    </form>
+    <div class="fs-message" id="authMessage"></div>
+    <div class="fs-account" id="accountBox">
+      <strong id="accountName">Anggota</strong>
+      <p id="accountEmail"></p>
+      <p id="accountPlan">Memuat informasi keanggotaan...</p>
+    </div>
+  </section>
 
-  <p class="fs-hub-footer">
-    Catatan FerSus · feribatahan@gmail.com
-  </p>
+  <h2>Games yang Bisa Dimainkan</h2>
+  <div class="fs-hub-grid">
+    <a class="fs-hub-card english" data-symbol="🇬🇧" href="https://feribatahan.github.io/English-Quest/" target="_blank" rel="noopener noreferrer">
+      <span class="fs-hub-icon">🇬🇧</span><span class="fs-hub-status">Aktif · Language</span><b>English Quest</b>
+      <p>Latihan kosakata dan kemampuan bahasa Inggris melalui kuis interaktif.</p><span class="fs-hub-open">BUKA ENGLISH QUEST ↗</span>
+    </a>
+    <a class="fs-hub-card flag" data-symbol="🌍" href="https://feribatahan.github.io/Flag-Quest/" target="_blank" rel="noopener noreferrer">
+      <span class="fs-hub-icon">🌍</span><span class="fs-hub-status">Aktif · Geography</span><b>Flag Quest</b>
+      <p>Tebak bendera negara-negara di dunia dan asah ingatan geografimu.</p><span class="fs-hub-open">BUKA FLAG QUEST ↗</span>
+    </a>
+    <a class="fs-hub-card quran" data-symbol="📖" href="https://feribatahan.github.io/Qur-an-Quest/" target="_blank" rel="noopener noreferrer">
+      <span class="fs-hub-icon">📖</span><span class="fs-hub-status">Aktif · Al-Qur'an</span><b>Qur'an Quest</b>
+      <p>Kuis interaktif Juz 30 untuk mengenal surah, ayat, makna, dan kandungan Al-Qur'an.</p><span class="fs-hub-open">BUKA QUR'AN QUEST ↗</span>
+    </a>
+    <a class="fs-hub-card siroh" data-symbol="🕌" href="https://feribatahan.github.io/Siroh-Quest/" target="_blank" rel="noopener noreferrer">
+      <span class="fs-hub-icon">🕌</span><span class="fs-hub-status">Aktif · Sejarah Islam</span><b>Siroh Quest</b>
+      <p>Pelajari Sirah Nabawiyah, perjalanan Rasulullah ﷺ, sejarah Islam, dan kisah para sahabat.</p><span class="fs-hub-open">BUKA SIROH QUEST ↗</span>
+    </a>
+    <a class="fs-hub-card indonesia" data-symbol="🇮🇩" href="https://feribatahan.github.io/Indonesia-Quest/" target="_blank" rel="noopener noreferrer">
+      <span class="fs-hub-icon">🇮🇩</span><span class="fs-hub-status">Aktif · Indonesia</span><b>Indonesia Quest</b>
+      <p>Kenali provinsi, ibu kota, pulau, suku, budaya, dan kekayaan Nusantara.</p><span class="fs-hub-open">BUKA INDONESIA QUEST ↗</span>
+    </a>
+    <a class="fs-hub-card world" data-symbol="🗺️" href="https://feribatahan.github.io/World-Capital-Quest/" target="_blank" rel="noopener noreferrer">
+      <span class="fs-hub-icon">🗺️</span><span class="fs-hub-status">Aktif · World Knowledge</span><b>World Capital Quest</b>
+      <p>Jelajahi ibu kota negara, landmark ikonik, dan pengetahuan menarik dari seluruh dunia.</p><span class="fs-hub-open">BUKA WORLD CAPITAL QUEST ↗</span>
+    </a>
+  </div>
 
+  <div class="fs-hub-note"><b>Catatan:</b> Play & Learn – Catatan FerSus Learning Hub. Platform belajar interaktif untuk keluarga, anak-anak, dan institusi pendidikan. Belajar sambil bermain, kapan saja dan di mana saja.</div>
+  <p class="fs-hub-footer">Catatan FerSus · feribatahan@gmail.com</p>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  const SUPABASE_URL = 'https://ohvbnfttaoswktejvubg.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_8OCqf5wAmyczYMChUNopjg_XokfM31d';
+  const { createClient } = window.supabase;
+  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+  const $ = (id) => document.getElementById(id);
+  let authMode = 'login';
+
+  const setMessage = (message, type = '') => {
+    $('authMessage').textContent = message;
+    $('authMessage').className = `fs-message ${type}`;
+  };
+
+  const showPanel = (mode) => {
+    authMode = mode;
+    $('authPanel').classList.add('show');
+    $('accountBox').classList.remove('show');
+    $('authForm').hidden = false;
+    $('nameField').hidden = mode !== 'register';
+    $('panelTitle').textContent = mode === 'register' ? 'Daftar Anggota Baru' : 'Login Anggota';
+    $('submitAuth').textContent = mode === 'register' ? 'Buat Akun' : 'Login';
+    $('password').autocomplete = mode === 'register' ? 'new-password' : 'current-password';
+    setMessage('');
+    $('authPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
+  };
+
+  $('loginBtn').addEventListener('click', () => showPanel('login'));
+  $('registerBtn').addEventListener('click', () => showPanel('register'));
+
+  $('authForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const email = $('email').value.trim();
+    const password = $('password').value;
+    const submit = $('submitAuth');
+    submit.disabled = true;
+    submit.textContent = 'Memproses...';
+    setMessage('');
+
+    try {
+      if (authMode === 'register') {
+        const fullName = $('fullName').value.trim();
+        if (!fullName) throw new Error('Nama lengkap wajib diisi.');
+        const { data, error } = await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { full_name: fullName },
+            emailRedirectTo: window.location.origin
+          }
+        });
+        if (error) throw error;
+        if (data.session) {
+          setMessage('Pendaftaran berhasil dan akun sudah masuk. Selamat datang!', 'success');
+          await refreshSession(data.session.user);
+        } else {
+          setMessage('Pendaftaran berhasil. Silakan buka email untuk mengonfirmasi akun sebelum login.', 'success');
+          $('authForm').reset();
+        }
+      } else {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        setMessage('Login berhasil. Selamat datang kembali!', 'success');
+        await refreshSession(data.user);
+      }
+    } catch (error) {
+      setMessage(error.message || 'Terjadi kesalahan. Silakan coba lagi.', 'error');
+    } finally {
+      submit.disabled = false;
+      submit.textContent = authMode === 'register' ? 'Buat Akun' : 'Login';
+    }
+  });
+
+  async function refreshSession(user) {
+    if (!user) return;
+    $('authStatus').textContent = `Login sebagai ${user.email}`;
+    $('loginBtn').hidden = true;
+    $('registerBtn').hidden = true;
+    $('logoutBtn').hidden = false;
+    $('authForm').hidden = true;
+    $('accountBox').classList.add('show');
+    $('accountName').textContent = user.user_metadata?.full_name || 'Anggota Play & Learn';
+    $('accountEmail').textContent = user.email || '';
+    $('accountPlan').textContent = 'Status keanggotaan: belum ada paket aktif yang ditampilkan.';
+    $('panelTitle').textContent = 'Dashboard Anggota';
+
+    const { data: subscriptions, error } = await supabaseClient
+      .from('subscriptions')
+      .select('id,status,start_date,end_date,created_at,packages(name)')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if (!error && subscriptions && subscriptions.length) {
+      const sub = subscriptions[0];
+      const packageName = sub.packages?.name || 'Paket anggota';
+      const endDate = sub.end_date ? new Date(sub.end_date).toLocaleDateString('id-ID') : '-';
+      $('accountPlan').textContent = `Paket: ${packageName} · Status: ${sub.status} · Berlaku sampai: ${endDate}`;
+    } else if (error) {
+      $('accountPlan').textContent = 'Akun aktif. Informasi paket belum dapat dimuat.';
+      console.warn('Gagal memuat subscription:', error.message);
+    }
+  }
+
+  $('logoutBtn').addEventListener('click', async () => {
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) {
+      setMessage(error.message, 'error');
+      return;
+    }
+    $('authStatus').textContent = 'Anda sudah logout. Silakan login atau daftar.';
+    $('loginBtn').hidden = false;
+    $('registerBtn').hidden = false;
+    $('logoutBtn').hidden = true;
+    $('authPanel').classList.remove('show');
+    $('authForm').hidden = false;
+    $('accountBox').classList.remove('show');
+    setMessage('');
+  });
+
+  supabaseClient.auth.onAuthStateChange((_event, session) => {
+    if (session?.user) refreshSession(session.user);
+  });
+
+  supabaseClient.auth.getSession().then(({ data }) => {
+    if (data.session?.user) {
+      $('authPanel').classList.add('show');
+      refreshSession(data.session.user);
+    }
+  });
+})();
+</script>
+</body>
+</html>
