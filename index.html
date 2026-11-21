@@ -67,6 +67,19 @@
 .fs-member-empty{padding:13px;background:#fff;border:1px dashed #cbd5e1;border-radius:10px;color:#526170;font-size:13px;line-height:1.6}
 .fs-member-note{font-size:12px;color:#64748b;line-height:1.5;margin-top:12px}
 
+
+.fs-checkout-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(15,23,42,.62)}
+.fs-checkout-modal.show{display:flex}
+.fs-checkout-dialog{width:min(100%,480px);background:#fff;border-radius:16px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.fs-checkout-dialog h3{font:bold 22px Georgia,serif;color:#102a43;margin:0 0 10px}
+.fs-checkout-dialog p{font-size:14px;line-height:1.6;color:#475569;margin:9px 0}
+.fs-checkout-email{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px;background:#f1f7f6;border:1px solid #d5e8e3;border-radius:10px;margin:14px 0}
+.fs-checkout-email strong{overflow-wrap:anywhere;color:#145b50}
+.fs-checkout-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.fs-checkout-actions .fs-btn{flex:1}
+.fs-btn:disabled{opacity:.55;cursor:not-allowed}
+@media(max-width:480px){.fs-checkout-dialog{padding:19px}.fs-checkout-actions{flex-direction:column}}
+
 @media(max-width:760px){
  .fs-hub{padding:14px;max-width:100%}
  .fs-hub-hero{padding:24px 20px;margin-bottom:18px}
@@ -135,10 +148,28 @@
         <div id="familyPackages" class="fs-member-grid">
           <div class="fs-member-empty">Memuat pilihan paket...</div>
         </div>
-        <p class="fs-member-note">Paket berlaku 30 hari. Pemilihan paket dan pembayaran akan diaktifkan setelah alur checkout Lynk.id siap.</p>
+        <p class="fs-member-note">Paket berlaku 30 hari. Pembayaran dilakukan melalui Lynk.id. Gunakan email akun Play &amp; Learn yang sedang login agar aktivasi otomatis dapat dicocokkan.</p>
       </div>
     </div>
   </section>
+
+  <div class="fs-checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" aria-hidden="true">
+    <div class="fs-checkout-dialog">
+      <h3 id="checkoutTitle">Konfirmasi sebelum checkout</h3>
+      <p id="checkoutPackage"></p>
+      <p>Untuk memastikan paket otomatis masuk ke akun yang benar, gunakan <b>email akun Play &amp; Learn yang sedang login</b> saat mengisi checkout Lynk.</p>
+      <div class="fs-checkout-email">
+        <strong id="checkoutEmail"></strong>
+        <button class="fs-btn fs-btn-outline" id="copyCheckoutEmail" type="button">Salin email</button>
+      </div>
+      <p>Jika Anda menggunakan email berbeda di Lynk, pembayaran tidak akan langsung mengaktifkan keanggotaan dan perlu verifikasi manual.</p>
+      <div class="fs-checkout-actions">
+        <button class="fs-btn fs-btn-outline" id="cancelCheckout" type="button">Kembali</button>
+        <button class="fs-btn fs-btn-primary" id="continueCheckout" type="button">Saya mengerti, lanjut ke Lynk</button>
+      </div>
+      <div class="fs-message" id="checkoutMessage" aria-live="polite"></div>
+    </div>
+  </div>
 
   <h2>Games yang Bisa Dimainkan</h2>
   <div class="fs-hub-grid">
@@ -190,6 +221,13 @@
 
   const $ = (id) => document.getElementById(id);
   let authMode = 'login';
+  let currentUser = null;
+  let selectedCheckout = null;
+
+  const CHECKOUT_URLS = {
+    'Family Monthly': 'https://lynk.id/belajarsekeluarga/r186rrj97zdg/checkout',
+    'Family Plus': 'https://lynk.id/belajarsekeluarga/mwn9llredk9/checkout'
+  };
 
   const setMessage = (message, type = '') => {
     $('authMessage').textContent = message;
@@ -211,6 +249,69 @@
 
   $('loginBtn').addEventListener('click', () => showPanel('login'));
   $('registerBtn').addEventListener('click', () => showPanel('register'));
+
+  function closeCheckoutModal() {
+    $('checkoutModal').classList.remove('show');
+    $('checkoutModal').setAttribute('aria-hidden', 'true');
+    selectedCheckout = null;
+  }
+
+  function openCheckoutModal(pkg) {
+    if (!currentUser?.email) {
+      setMessage('Silakan login terlebih dahulu sebelum memilih paket.', 'error');
+      showPanel('login');
+      return;
+    }
+    const checkoutUrl = CHECKOUT_URLS[pkg.name];
+    if (!checkoutUrl) {
+      setMessage('Link checkout untuk paket ini belum tersedia.', 'error');
+      return;
+    }
+    selectedCheckout = { name: pkg.name, url: checkoutUrl, email: currentUser.email };
+    $('checkoutPackage').textContent = `${pkg.name} · ${new Intl.NumberFormat('id-ID', {
+      style: 'currency', currency: 'IDR', maximumFractionDigits: 0
+    }).format(Number(pkg.price || 0))} · ${pkg.duration_days || 30} hari`;
+    $('checkoutEmail').textContent = currentUser.email;
+    $('checkoutMessage').textContent = '';
+    $('checkoutMessage').className = 'fs-message';
+    $('checkoutModal').classList.add('show');
+    $('checkoutModal').setAttribute('aria-hidden', 'false');
+    $('continueCheckout').focus();
+  }
+
+  $('cancelCheckout').addEventListener('click', closeCheckoutModal);
+  $('checkoutModal').addEventListener('click', (event) => {
+    if (event.target === $('checkoutModal')) closeCheckoutModal();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && $('checkoutModal').classList.contains('show')) {
+      closeCheckoutModal();
+    }
+  });
+
+  $('copyCheckoutEmail').addEventListener('click', async () => {
+    if (!selectedCheckout?.email) return;
+    try {
+      await navigator.clipboard.writeText(selectedCheckout.email);
+      $('checkoutMessage').textContent = 'Email berhasil disalin. Gunakan email ini pada checkout Lynk.';
+      $('checkoutMessage').className = 'fs-message success';
+    } catch {
+      $('checkoutMessage').textContent = 'Tidak dapat menyalin otomatis. Silakan salin email yang ditampilkan.';
+      $('checkoutMessage').className = 'fs-message error';
+    }
+  });
+
+  $('continueCheckout').addEventListener('click', () => {
+    if (!selectedCheckout?.url || !currentUser?.email ||
+        currentUser.email.toLowerCase() !== selectedCheckout.email.toLowerCase()) {
+      $('checkoutMessage').textContent = 'Sesi login berubah. Tutup konfirmasi dan pilih paket kembali.';
+      $('checkoutMessage').className = 'fs-message error';
+      return;
+    }
+    const url = selectedCheckout.url;
+    window.open(url, '_blank', 'noopener,noreferrer');
+    closeCheckoutModal();
+  });
 
   $('authForm').addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -257,6 +358,7 @@
 
   async function refreshSession(user) {
     if (!user) return;
+    currentUser = user;
     $('authStatus').textContent = `Login sebagai ${user.email}`;
     $('loginBtn').hidden = true;
     $('registerBtn').hidden = true;
@@ -364,10 +466,9 @@
 
       const button = document.createElement('button');
       button.type = 'button';
-      button.className = 'fs-btn fs-btn-outline';
-      button.textContent = 'Segera tersedia';
-      button.disabled = true;
-      button.title = 'Checkout akan diaktifkan setelah integrasi pembayaran Lynk.id selesai.';
+      button.className = 'fs-btn fs-btn-primary';
+      button.textContent = 'Lanjutkan ke Pembayaran';
+      button.addEventListener('click', () => openCheckoutModal(pkg));
 
       card.append(heading, price, description, duration, button);
       packageArea.appendChild(card);
@@ -380,6 +481,7 @@
       setMessage(error.message, 'error');
       return;
     }
+    currentUser = null;
     $('authStatus').textContent = 'Anda sudah logout. Silakan login atau daftar.';
     $('loginBtn').hidden = false;
     $('registerBtn').hidden = false;
