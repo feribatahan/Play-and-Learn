@@ -148,7 +148,7 @@
         <div id="familyPackages" class="fs-member-grid">
           <div class="fs-member-empty">Memuat pilihan paket...</div>
         </div>
-        <p class="fs-member-note">Paket berlaku 30 hari. Pembayaran dilakukan melalui Lynk.id. Gunakan email akun Play &amp; Learn yang sedang login agar aktivasi otomatis dapat dicocokkan.</p>
+        <p class="fs-member-note">Paket berlaku 30 hari. Gunakan email akun Play &amp; Learn yang sedang login saat checkout Lynk. Jika mengganti paket saat keanggotaan masih aktif, paket baru akan menggantikan paket yang sedang berjalan setelah pembayaran terverifikasi.</p>
       </div>
     </div>
   </section>
@@ -392,6 +392,7 @@
 
     const statusBox = $('membershipStatus');
     statusBox.replaceChildren();
+    let activeSubscription = null;
 
     if (subError) {
       statusBox.textContent = `Status langganan gagal dimuat: ${subError.message}`;
@@ -399,6 +400,14 @@
       console.warn('Gagal memuat subscription:', subError.message);
     } else if (subscriptions && subscriptions.length) {
       const sub = subscriptions[0];
+      const subscriptionEnd = sub.end_date ? new Date(sub.end_date) : null;
+      const isCurrentlyActive =
+        String(sub.status || '').toLowerCase() === 'active' &&
+        subscriptionEnd !== null &&
+        subscriptionEnd.getTime() > Date.now();
+
+      if (isCurrentlyActive) activeSubscription = sub;
+
       let packageName = 'Paket keluarga';
       if (sub.package_id) {
         const { data: linkedPackage, error: linkedPackageError } = await supabaseClient
@@ -467,8 +476,20 @@
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'fs-btn fs-btn-primary';
-      button.textContent = 'Lanjutkan ke Pembayaran';
-      button.addEventListener('click', () => openCheckoutModal(pkg));
+
+      if (activeSubscription && activeSubscription.package_id === pkg.id) {
+        button.textContent = 'Paket Sedang Aktif';
+        button.disabled = true;
+        button.setAttribute('aria-label', `${pkg.name} sedang aktif`);
+        button.title = 'Paket ini sudah aktif pada akun Anda.';
+      } else if (activeSubscription) {
+        button.textContent = 'Ganti ke Paket Ini';
+        button.title = 'Paket aktif saat ini akan digantikan setelah pembayaran paket baru berhasil.';
+        button.addEventListener('click', () => openCheckoutModal(pkg));
+      } else {
+        button.textContent = 'Lanjutkan ke Pembayaran';
+        button.addEventListener('click', () => openCheckoutModal(pkg));
+      }
 
       card.append(heading, price, description, duration, button);
       packageArea.appendChild(card);
